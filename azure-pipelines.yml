@@ -1,10 +1,4 @@
 # ASP.NET
-- task: InstallFortifySCA@5
-  inputs:
-    InstallerPath: 'C:\Users\Johnson Chiew\Desktop\SCA_00019.exe'
-    VS2017: true
-    LicenseFile: 'C:\Users\Johnson Chiew\Desktop\fortify.license'
-    RunFortifyRulepackUpdate: true
 # Build and test ASP.NET projects.
 # Add steps that publish symbols, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/apps/aspnet/build-aspnet-4
@@ -38,3 +32,16 @@ steps:
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+- task: FortifySCA@5
+  inputs:
+    licenseFile: 'C:\Users\Johnson Chiew\Desktop\fortify.license'
+    runBuildTranslate: true
+    applicationType: 'dotnet'
+    fortifyProjects: '**\*.sln'
+    fortifyBuildId: 'test'
+    runFortifyRulepackUpdate: false
+    runFortifyClean: true
+    scaVerbose: false
+    scaDebug: false
+    runFortifyScan: true
+    fortifyScanType: 'LocalScan'
